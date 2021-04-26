@@ -3,7 +3,7 @@ import React, { ReactChild } from "react";
 import useStyles from "./styles";
 
 interface TemplateProps {
-  children: ReactChild;
+  children: ReactChild[] | ReactChild;
 }
 
 export const Template: React.FC<TemplateProps> = ({ children }) => {

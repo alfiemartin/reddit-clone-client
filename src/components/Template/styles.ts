@@ -6,5 +6,6 @@ export default makeStyles((theme) => ({
   },
   childrenCont: {
     marginTop: theme.spacing(8),
+    background: theme.palette.background.default,
   },
 }));
