@@ -4,10 +4,7 @@ export default makeStyles((theme) => ({
   container: {
     width: "100%",
     height: `calc(100vh - ${theme.spacing(8)}px)`,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    padding: theme.spacing(2),
   },
   signupText: {
     fontWeight: "bold",
@@ -25,7 +22,7 @@ export default makeStyles((theme) => ({
     marginBottom: theme.spacing(8),
   },
   form: {
-    width: "50%",
+    // width: "50%",
   },
   button: {
     marginTop: theme.spacing(2),
