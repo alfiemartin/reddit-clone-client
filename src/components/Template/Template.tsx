@@ -11,7 +11,7 @@ interface TemplateProps {
 
 export const Template: React.FC<TemplateProps> = ({ children, title }) => {
   const classes = useStyles();
-  const [{ data, fetching }] = useMeQuery();
+  const [{ data, fetching }] = useMeQuery(); //query tells me if logged in based on cookie
   let loginRegisterButtons = <div></div>;
 
   if (fetching) {
