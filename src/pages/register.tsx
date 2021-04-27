@@ -1,5 +1,5 @@
 import { Template } from "../components/Template/Template";
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   FormControl,
@@ -10,11 +10,26 @@ import {
   Typography,
 } from "@material-ui/core";
 import useStyles from "../styles/registerStyles";
+import { useRegisterMutation } from "src/generated/graphql";
 
 interface registerProps {}
 
 const Register: React.FC<registerProps> = ({}) => {
   const classes = useStyles();
+
+  const [, register] = useRegisterMutation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [response, setResponse] = useState();
+
+  const handleRegister = async () => {
+    const res = await register({ username, password });
+
+    if (res.data?.register.errors) {
+      console.log(res.data.register.errors);
+    }
+  };
+
   return (
     <Template>
       <Grid
@@ -31,16 +46,20 @@ const Register: React.FC<registerProps> = ({}) => {
             <FormGroup>
               <FormControl className={classes.formGroup}>
                 <FormLabel>Username</FormLabel>
-                <Input />
+                <Input onChange={(e) => setUsername(e.target.value)} />
               </FormControl>
               <FormControl className={classes.formGroup}>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </FormControl>
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                onClick={handleRegister}
               >
                 Sign Up!
               </Button>
