@@ -10,39 +10,39 @@ import {
   Typography,
 } from "@material-ui/core";
 import useStyles from "../styles/registerStyles";
-import { useRegisterMutation } from "src/generated/graphql";
+import { useLoginMutation } from "src/generated/graphql";
 import { useRouter } from "next/router";
 
-interface registerProps {}
+interface loginProps {}
 
-const Register: React.FC<registerProps> = ({}) => {
+const Login: React.FC<loginProps> = ({}) => {
   const classes = useStyles();
 
-  const [, register] = useRegisterMutation();
+  const [, login] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const router = useRouter();
 
-  const handleRegister = async () => {
-    const res = await register({ username, password });
+  const handleLogin = async () => {
+    const res = await login({ options: { username, password } });
     setUsernameError("");
     setPasswordError("");
 
-    if (res.data?.register.errors) {
-      if (res.data.register.errors[0].field === "username") {
-        setUsernameError(res.data.register.errors[0].message);
-      } else if (res.data.register.errors[0].field === "password") {
-        setPasswordError(res.data.register.errors[0].message);
+    if (res.data?.login.errors) {
+      if (res.data.login.errors[0].field === "username") {
+        setUsernameError(res.data.login.errors[0].message);
+      } else if (res.data.login.errors[0].field === "password") {
+        setPasswordError(res.data.login.errors[0].message);
       }
-    } else if (res.data?.register.user) {
+    } else if (res.data?.login.user) {
       router.push("/");
     }
   };
 
   return (
-    <Template title="register">
+    <Template title="login">
       <Grid
         container
         justify="center"
@@ -51,7 +51,7 @@ const Register: React.FC<registerProps> = ({}) => {
       >
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Typography variant="h3" className={classes.signupText}>
-            Sign Up Now!
+            Login
           </Typography>
           <form className={classes.form}>
             <FormGroup>
@@ -76,9 +76,9 @@ const Register: React.FC<registerProps> = ({}) => {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={handleRegister}
+                onClick={handleLogin}
               >
-                Sign Up!
+                Login
               </Button>
             </FormGroup>
           </form>
@@ -88,4 +88,4 @@ const Register: React.FC<registerProps> = ({}) => {
   );
 };
 
-export default Register;
+export default Login;
