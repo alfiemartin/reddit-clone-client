@@ -3,6 +3,7 @@ import React from "react";
 import NextLink from "next/link";
 import useStyles from "./styles";
 import { useLogoutMutation, useMeQuery } from "../../generated/graphql";
+import { isServer } from "../../utils/isServer";
 
 interface TemplateProps {
   children: any;
@@ -11,7 +12,7 @@ interface TemplateProps {
 
 export const Template: React.FC<TemplateProps> = ({ children, title }) => {
   const classes = useStyles();
-  const [{ data, fetching }] = useMeQuery(); //query tells me if logged in based on cookie
+  const [{ data, fetching }] = useMeQuery({ pause: isServer() }); //query tells me if logged in based on cookie. dont fetch from server please
   const [, useLogout] = useLogoutMutation();
   let loginRegisterButtons = <div></div>;
 
