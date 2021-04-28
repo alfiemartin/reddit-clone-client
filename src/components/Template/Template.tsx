@@ -43,7 +43,7 @@ export const Template: React.FC<TemplateProps> = ({ children, title }) => {
     loginRegisterButtons = (
       <>
         <Typography className={classes.marginRight}>
-          Logged in as {data.me.username}
+          {data.me.username}
         </Typography>
         <Button variant="contained" onClick={() => useLogout()}>
           Logout
