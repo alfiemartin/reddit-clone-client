@@ -9,11 +9,13 @@ function Home(): JSX.Element {
   return (
     <Template title="Home">
       <h1>Home</h1>
-      {!data
-        ? null
-        : data.posts.map((post) => <div key={post.id}>{post.title}</div>)}
+      {!data ? (
+        <h1>loading...</h1>
+      ) : (
+        data.posts.map((post) => <div key={post.id}>{post.title}</div>)
+      )}
     </Template>
   );
 }
 
-export default withUrqlClient(createUrqlClient)(Home);
+export default withUrqlClient(createUrqlClient, { ssr: true })(Home);
