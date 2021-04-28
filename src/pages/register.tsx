@@ -23,20 +23,29 @@ const Register: React.FC<registerProps> = ({}) => {
   const [, register] = useRegisterMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const router = useRouter();
 
   const handleRegister = async () => {
-    const res = await register({ username, password });
+    const res = await register({ username, email, password });
     setUsernameError("");
+    setEmailError("");
     setPasswordError("");
 
     if (res.data?.register.errors) {
-      if (res.data.register.errors[0].field === "username") {
-        setUsernameError(res.data.register.errors[0].message);
-      } else if (res.data.register.errors[0].field === "password") {
-        setPasswordError(res.data.register.errors[0].message);
+      switch (res.data.register.errors[0].field) {
+        case "username":
+          setUsernameError(res.data.register.errors[0].message);
+          break;
+        case "email":
+          setEmailError(res.data.register.errors[0].message);
+          break;
+        case "password":
+          setPasswordError(res.data.register.errors[0].message);
+          break;
       }
     } else if (res.data?.register.user) {
       router.push("/");
@@ -63,6 +72,14 @@ const Register: React.FC<registerProps> = ({}) => {
                   onChange={(e) => setUsername(e.target.value)}
                   error={usernameError.length > 1 ? true : false}
                   helperText={usernameError}
+                />
+              </FormControl>
+              <FormControl className={classes.formGroup}>
+                <FormLabel>email</FormLabel>
+                <TextField
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={emailError.length > 1 ? true : false}
+                  helperText={emailError}
                 />
               </FormControl>
               <FormControl className={classes.formGroup}>
