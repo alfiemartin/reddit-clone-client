@@ -10,6 +10,7 @@ export default makeStyles((theme) => ({
   childrenCont: {
     marginTop: theme.spacing(8),
     background: theme.palette.background.default,
+    minHeight: "100vh",
   },
   marginRight: {
     marginRight: theme.spacing(2),

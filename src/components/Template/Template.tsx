@@ -1,22 +1,23 @@
 import { AppBar, Button, Toolbar, Typography } from "@material-ui/core";
-import React, { ReactChild } from "react";
+import React from "react";
 import NextLink from "next/link";
 import useStyles from "./styles";
-import { useMeQuery } from "../../generated/graphql";
+import { useLogoutMutation, useMeQuery } from "../../generated/graphql";
 
 interface TemplateProps {
-  children: ReactChild[] | ReactChild;
+  children: any;
   title: String;
 }
 
 export const Template: React.FC<TemplateProps> = ({ children, title }) => {
   const classes = useStyles();
   const [{ data, fetching }] = useMeQuery(); //query tells me if logged in based on cookie
+  const [, useLogout] = useLogoutMutation();
   let loginRegisterButtons = <div></div>;
 
   if (fetching) {
     //data loading
-    loginRegisterButtons = <div></div>;
+    loginRegisterButtons = <div>loading..</div>;
   } else if (!data?.me) {
     //not logged in
     loginRegisterButtons = (
@@ -43,7 +44,9 @@ export const Template: React.FC<TemplateProps> = ({ children, title }) => {
         <Typography className={classes.marginRight}>
           Logged in as {data.me.username}
         </Typography>
-        <Button variant="contained">Logout</Button>
+        <Button variant="contained" onClick={() => useLogout()}>
+          Logout
+        </Button>
       </>
     );
   }
